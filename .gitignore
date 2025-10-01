@@ -1,0 +1,19 @@
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Julia
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+*.ji
+*.so
+Manifest.toml
+Project.toml
+
+# Not include manually
+test.jl
+testimpurity.jl
