@@ -32,7 +32,7 @@ end
 testIsingSameTRGAndImpTRG()
 
 
-function testIsingExpValue(niter=15, npoints=10)
+function testIsingExpValue(;niter=15, npoints=10, h=0)
     """
     Plot the expectation value <m^2> of the Ising model to check the results
     """
@@ -43,42 +43,45 @@ function testIsingExpValue(niter=15, npoints=10)
     # Make first the impurity tensor
     σz = [1.0 0; 
             0 -1.0]  # ℂ^2 × ℂ^2
-
+    
     
     for β in βs
         # Get the values for the normal partition function
-        T = getT(β)
-        scheme = TRG(T)
-        data = run!(scheme, truncdim(16), maxiter(niter); finalize_beginning=true)
-        Z = exp(free_energy(data, -1))
-        push!(Zs, Z) 
-
-
         # Get the values for the Z_2 partition function
         #Suppose you want the expectation at the first index i (the top-left corner in your 4-site plaquette):
+        T = getT(β, h=h)
+        
         T_exp = similar(T)
         for i in 1:2, j in 1:2, k in 1:2, l in 1:2
             T_exp[i,j,k,l] = σz[i,i] * T[i,j,k,l]
         end
         scheme_imp = ImpTRG(T, T_exp, T, T, T)
         data_npure, data_nimp = run!(scheme_imp, truncdim(16), maxiter(niter); finalize_beginning=true)
-        Z2 = exp(free_energy(data_npure, -1))
+        
+        Z = exp(free_energy(data_npure, -1))
+        push!(Zs, Z) 
+        
+        Z2 = exp(free_energy(data_nimp, -1))
         push!(Z2s, Z2) 
     end 
 
     ms = [Z2s[i]/Zs[i] for i in 1:length(Zs)]
-
-
-    # Plot
-    plot(βs, ms, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model", legend=false)
+    
     return βs, ms
 end
-testIsingExpValue(10)
 
 
+βs, ms = testIsingExpValue()
+plot(βs, ms, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model", legend=false)
+
+βhposs, mhposs = testIsingExpValue(niter=15, npoints=10, h=0.01)
+plot(βhposs, mhposs, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model with small positive h", legend=false)
 
 
-function getT(β, h=0)
+βhnegs, mhnegs = testIsingExpValue(niter=15, npoints=10, h=-0.01)
+plot(βhnegs, mhnegs, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model with small positive h", legend=false)
+
+function getT(β; h=0)
     
     function σ(i::Int64)
             return 2i - 3
