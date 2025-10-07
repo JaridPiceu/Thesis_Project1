@@ -13,6 +13,9 @@ Thumbs.db
 *.so
 Manifest.toml
 Project.toml
+TensorTest.jl
+Impurity Algorithm/.ipynb_checkpoints/
+Impurity Algorithm/testImpTRG.jl
 
 # Not include manually
 test.jl
