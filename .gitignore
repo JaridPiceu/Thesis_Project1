@@ -15,6 +15,9 @@ Manifest.toml
 Project.toml
 TensorTest.jl
 Impurity Algorithm/.ipynb_checkpoints/
+Impurity Algorithm/checkImpurity.jl
+Impurity Algorithm/testImpTRG.jl
+Sandbox
 
 # Not include manually
 test.jl
