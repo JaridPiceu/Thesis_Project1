@@ -6,7 +6,7 @@ using Plots
 function testDoesItRun()
     T = getTensor(2,1,1,1)
     scheme = ImpTRG(T, T, T, T, T)
-    data_npure, data_nimp = run!(scheme, truncdim(16), maxiter(20); finalize_beginning=true)
+    data_npure, data_nimp = run!(scheme, truncdim(16), maxiter(15); finalize_beginning=true)
 
     println(data_npure)
     println(data_nimp)
@@ -71,11 +71,11 @@ function testIsingExpValue(;niter=15, npoints=10, h=0)
 end
 
 
-βs, ms = testIsingExpValue()
-plot(βs, ms, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model", legend=false)
+βs, ms = testIsingExpValue(niter=10, npoints=30)
+scatter(βs, ms, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model", legend=false)
 
-βhposs, mhposs = testIsingExpValue(niter=15, npoints=10, h=0.01)
-plot(βhposs, mhposs, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model with small positive h", legend=false)
+βhposs, mhposs = testIsingExpValue(niter=10, npoints=30, h=0.01)
+scatter(βhposs, mhposs, xlabel="β", ylabel="⟨m⟩", title="Magnetization of 2D Ising model with small positive h", legend=false)
 
 
 βhnegs, mhnegs = testIsingExpValue(niter=15, npoints=10, h=-0.01)
