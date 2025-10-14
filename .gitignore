@@ -12,7 +12,6 @@ Thumbs.db
 *.ji
 *.so
 Manifest.toml
-Project.toml
 TensorTest.jl
 Impurity Algorithm/.ipynb_checkpoints/
 Impurity Algorithm/checkImpurity.jl
