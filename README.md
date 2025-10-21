@@ -10,6 +10,7 @@ The work focuses on implementing an impurity-based variant of the Tensor Renorma
 The purpose is to get familiar with the workflow and play with this simple toy model. I tried to produce expected results such as a phase diagram, cft data, ... and I tried to reproduce results of a paper of [Kadoh et.al.](https://arxiv.org/abs/1811.12376)
 
 ## 2 Project Structure
+```
 ├── Impurity algorithm/
 │   └── ImpTRG.jl               # First clean implementation ImpurityTRG, which is now part of TNRKit
 │ 
@@ -21,3 +22,4 @@ The purpose is to get familiar with the workflow and play with this simple toy m
 │                              
 └── Tensormaker/                 
     └── TensorFactory.jl        # Makes the tensors for this model
+```
