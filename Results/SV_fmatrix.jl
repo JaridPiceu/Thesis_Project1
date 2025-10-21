@@ -9,7 +9,7 @@ include("../TensorMaker/TensorFactory.jl")
 
 
 # Parameters
-K = 16 #In paper: 256
+K = 32 #In paper: 256
 μ0s = [-0.1841626, -0.1006174, -0.06635522, -0.0239501, -0.0128051]
 λs = [1.0, 0.5, 0.0312, 0.01, 0.005]
 

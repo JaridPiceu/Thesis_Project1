@@ -6,11 +6,11 @@ using TensorKit
 include("../TensorMaker/TensorFactory.jl")
 
 # PARAMETERS
-niter = 15
-ndimtrunc = 8
-K = 8
-μ0_range = range(-10, 10, length = 6)
-λ_range = range(0.1, 1, length = 3)
+niter = 20
+ndimtrunc = 32
+K = 32
+μ0_range = range(-10, 10, length = 100)
+λ_range = range(0.1, 1, length = 10)
 
 
 """
