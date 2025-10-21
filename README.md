@@ -1,4 +1,4 @@
-# Theiss Project 1: Real $$\phi^4$$
+# Thesis Project 1: Real $$\phi^4$$
 
 *Impurity Tensor Renormalization for the real $$\phi^4$$-Model*
 
