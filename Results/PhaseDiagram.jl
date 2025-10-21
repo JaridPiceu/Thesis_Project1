@@ -7,10 +7,10 @@ include("../TensorMaker/TensorFactory.jl")
 
 # PARAMETERS
 niter = 15
-ndimtrunc = 32
-K = 32
-μ0_range = range(-10, 10, length = 51)
-λ_range = range(0.1, 1, length = 10)
+ndimtrunc = 8
+K = 8
+μ0_range = range(-10, 10, length = 6)
+λ_range = range(0.1, 1, length = 3)
 
 
 """
@@ -49,13 +49,13 @@ function getSSB_Data(;
         println("Computed μ0 = $μ0, λ = $λ → value = $val")
     end
 
-    filepath = joinpath("Results/Data", "SSB_data.csv")
+    filepath = joinpath("Results/Data", "PhaseDiagram.csv")
     CSV.write(filepath, results)
     return println("✅ Data saved to $filepath")
 end
 
 
-function plotSSB_Data(; filepath = joinpath("Results/Data", "SSB_data.csv"))
+function plotSSB_Data(; filepath = joinpath("Results/Data", "PhaseDiagram.csv"))
     df = CSV.read(filepath, DataFrame)
 
     # Convert data to grid format for heatmap
@@ -70,6 +70,12 @@ function plotSSB_Data(; filepath = joinpath("Results/Data", "SSB_data.csv"))
         colorbar_title = "<ϕ²>",
         title = "Phase diagram: ⟨ϕ²⟩ Grid",
     )
+
+    # Ensure Data directory exists
+    if !isdir("Results/Plots")
+        mkpath("Results/Plots")
+    end
+
 
     plotpath = joinpath("Results/Plots", "PhaseDiagram.png")
     savefig(plt, plotpath)
