@@ -2,24 +2,24 @@ using TensorKit
 using FastGaussQuadrature
 
 
-function f(ϕ1, ϕ2, μ0, λ, h=0)
+function f(ϕ1, ϕ2, μ0, λ, h = 0)
     """
     Note: we use μ0 instead of μ0^2 for readibility
     """
     return exp(
-        -1/2 * (ϕ1-ϕ2)^2
-        - μ0/8 * (ϕ1^2+ϕ2^2)
-        - λ/16 * (ϕ1^4+ϕ2^4)    
-        + h/4 *  (ϕ1+ϕ2)
+        -1 / 2 * (ϕ1 - ϕ2)^2
+            - μ0 / 8 * (ϕ1^2 + ϕ2^2)
+            - λ / 16 * (ϕ1^4 + ϕ2^4)
+            + h / 4 * (ϕ1 + ϕ2)
     )
-end 
+end
 
-function fmatrix(ys, μ0, λ, h=0)
+function fmatrix(ys, μ0, λ, h = 0)
     K = length(ys)
     matrix = zeros(K, K)
     for i in 1:K
         for j in 1:K
-            matrix[i, j] = f(ys[i], ys[j], μ0, λ, h)        
+            matrix[i, j] = f(ys[i], ys[j], μ0, λ, h)
         end
     end
     return TensorMap(matrix, ℂ^K ← ℂ^K)
@@ -47,7 +47,7 @@ Constructs a tensor for a single site using the specified parameters.
 4. Builds a rank-4 tensor by contracting over the quadrature points, using the SVD components and weights.
 5. Returns the tensor as a `TensorMap` object.
 """
-function getTensor(K, μ0, λ, h=0)
+function getTensor(K, μ0, λ, h = 0)
     # Weights and locations
     ys, ws = gausshermite(K)
 
@@ -60,17 +60,17 @@ function getTensor(K, μ0, λ, h=0)
     # Make tensor for one site
     T_arr = [
         sum(
-            √(S[i,i] * S[j,j] * S[k,k] * S[l,l]) *
-            ws[p] * exp(ys[p]^2) *
-            U[p,i] * U[p,j] * V[p,k] * V[p,l]
-            for p in 1:K
-        )
-        for i in 1:K, j in 1:K, k in 1:K, l in 1:K
+                √(S[i, i] * S[j, j] * S[k, k] * S[l, l]) *
+                ws[p] * exp(ys[p]^2) *
+                U[p, i] * U[p, j] * V[k, p] * V[l, p]
+                for p in 1:K
+            )
+            for i in 1:K, j in 1:K, k in 1:K, l in 1:K
     ]
 
     T = TensorMap(T_arr, ℂ^K ⊗ ℂ^K ← ℂ^K ⊗ ℂ^K)
     return T
-end 
+end
 
 
 """
@@ -87,7 +87,7 @@ Constructs an impurity tensor for a single site for the expaction value <ϕ>
 # Returns
 - `T::TensorMap`: A tensor map representing the impurity site, constructed via SVD decomposition and weighted sum over Gauss-Hermite quadrature points.
 """
-function getImp1Tensor(K, μ0, λ, h=0)
+function getImp1Tensor(K, μ0, λ, h = 0)
     # Weights and locations
     ys, ws = gausshermite(K)
 
@@ -100,12 +100,49 @@ function getImp1Tensor(K, μ0, λ, h=0)
     # Make tensor for one site
     T_arr = [
         sum(
-            √(S[i,i] * S[j,j] * S[k,k] * S[l,l]) *
-            ys[p] * ws[p] * exp(ys[p]^2) *
-            U[p,i] * U[p,j] * V[p,k] * V[p,l]
-            for p in 1:K
-        )
-        for i in 1:K, j in 1:K, k in 1:K, l in 1:K
+                √(S[i, i] * S[j, j] * S[k, k] * S[l, l]) *
+                ys[p] * ws[p] * exp(ys[p]^2) *
+                U[p, i] * U[p, j] * V[k, p] * V[l, p]
+                for p in 1:K
+            )
+            for i in 1:K, j in 1:K, k in 1:K, l in 1:K
+    ]
+
+    T = TensorMap(T_arr, ℂ^K ⊗ ℂ^K ← ℂ^K ⊗ ℂ^K)
+    return T
+end
+
+
+"""
+    getImp2Tensor(K, μ0, λ, h=0)
+Constructs an impurity tensor for a single site for the second of the expaction value ϕ^2
+# Arguments
+- `K::Int`: Number of quadrature points for Gauss-Hermite integration.
+- `μ0`: Mass parameter for the matrix construction.
+- `λ`: Coupling constant for the matrix construction.
+- `h`: External field parameter (default is 0).
+# Returns
+- `T::TensorMap`: A tensor map representing the impurity site, constructed via SVD decomposition and weighted sum over Gauss-Hermite quadrature points.
+"""
+function getImp2Tensor(K, μ0, λ, h = 0)
+    # Weights and locations
+    ys, ws = gausshermite(K)
+
+    # Determine fmatrix
+    f = fmatrix(ys, μ0, λ, h)
+
+    # SVD fmatrix
+    U, S, V = tsvd(f)
+
+    # Make tensor for one site
+    T_arr = [
+        sum(
+                √(S[i, i] * S[j, j] * S[k, k] * S[l, l]) *
+                ys[p]^2 * ws[p] * exp(ys[p]^2) *
+                U[p, i] * U[p, j] * V[k, p] * V[l, p]
+                for p in 1:K
+            )
+            for i in 1:K, j in 1:K, k in 1:K, l in 1:K
     ]
 
     T = TensorMap(T_arr, ℂ^K ⊗ ℂ^K ← ℂ^K ⊗ ℂ^K)
