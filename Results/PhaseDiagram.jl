@@ -71,7 +71,7 @@ function plotSSB_Data(; filepath = joinpath("Results/Data", "SSB_data.csv"))
         title = "Phase diagram: ⟨ϕ²⟩ Grid",
     )
 
-    plotpath = joinpath("Results/Plots", "SSB_heatmap.png")
+    plotpath = joinpath("Results/Plots", "PhaseDiagram.png")
     savefig(plt, plotpath)
     println("✅ Plot saved to $plotpath")
     return plt
