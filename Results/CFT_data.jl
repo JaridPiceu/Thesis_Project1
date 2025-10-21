@@ -134,18 +134,18 @@ function plotCFT(K, μ0, λ; h = 0, niter = 15, ndimtrunc = 16)
 
     # Plot the results
     xs = collect(range(1, length(cft_data)))
-    plt = scatter(xs, real(cft_data)[2:end], label="CFT data", color=:gray)   # Do not the first one (is zero)
-    scatter!([0], [c], label="Central charge", color=:orange)
+    plt = scatter(xs, real(cft_data)[2:end], label = "CFT data", color = :gray)   # Do not the first one (is zero)
+    scatter!([0], [c], label = "Central charge", color = :orange)
 
     # Plot the exact results
     ising_cft_exact = [
-    1 / 8, 1, 9 / 8, 9 / 8, 2, 2, 2, 2, 17 / 8, 17 / 8, 17 / 8, 3, 3,
-    3, 3, 3,
-    25 / 8, 25 / 8, 25 / 8, 25 / 8, 25 / 8, 25 / 8,
+        1 / 8, 1, 9 / 8, 9 / 8, 2, 2, 2, 2, 17 / 8, 17 / 8, 17 / 8, 3, 3,
+        3, 3, 3,
+        25 / 8, 25 / 8, 25 / 8, 25 / 8, 25 / 8, 25 / 8,
     ]
-    c_exact = 1/2
-    hline!(ising_cft_exact, label="Exact CFT data", color=:black, linestyle=:dot)
-    hline!([1/2], color=:red, linestyle=:dot)
+    c_exact = 1 / 2
+    hline!(ising_cft_exact, label = "Exact CFT data", color = :black, linestyle = :dot)
+    hline!([1 / 2], color = :red, linestyle = :dot)
 
     # Save the plot
     filepath = joinpath("Results/Plots", "CFT_data.png")
@@ -153,12 +153,12 @@ function plotCFT(K, μ0, λ; h = 0, niter = 15, ndimtrunc = 16)
 end
 
 # PARAMETERS
-K = 16
+K = 32
 μ0 = -0.1
 λ = 0.1
 h = 0
-niter = 5
-ndimtrunc = 16
+niter = 15
+ndimtrunc = 32
 
 getPhi4Data_cached(K, μ0, λ; h = h, niter = niter, ndimtrunc = ndimtrunc)
 
