@@ -4,7 +4,7 @@
 
 ## 1 Background, Motivation and Goal
 
-This project explores the use of tensor network renormalization (TNR) methods to study the two-dimensional [$$\phi^4$$ model](https://en.wikipedia.org/wiki/Quartic_interaction).
+This project explores the use of tensor network renormalization (TNR) methods to study the two-dimensional $$\phi^4$$ [model](https://en.wikipedia.org/wiki/Quartic_interaction).
 The work focuses on implementing an impurity-based variant of the Tensor Renormalization Group (TRG) to evaluate expectation values such as $$<\phi>$$ and $$<\phi^2>$$.
 
 The purpose is to get familiar with the workflow and play with this simple toy model. I tried to produce expected results such as a phase diagram, cft data, ... and I tried to reproduce results of a paper of [Kadoh et.al.](https://arxiv.org/abs/1811.12376)
