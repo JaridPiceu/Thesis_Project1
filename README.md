@@ -1,6 +1,6 @@
 # Thesis Project 1: Real $$\phi^4$$
 
-*Impurity Tensor Renormalization for the real $$\phi^4$$-Model*
+*Impurity Tensor Renormalization for the real* $$\phi^4$$*-Model*
 
 ## 1 Background, Motivation and Goal
 
