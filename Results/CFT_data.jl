@@ -144,6 +144,14 @@ function plotCFT(K, μ0, λ; h = 0, niter = 15, ndimtrunc = 16)
     savefig(plt, filepath)
 end
 
-getPhi4Data_cached(16, -0.1, 0.1; h = 0, niter = 5, ndimtrunc = 16)
+# PARAMETERS
+K = 16
+μ0 = -0.1
+λ = 0.1
+h = 0
+niter = 5
+ndimtrunc = 16
 
-plotCFT(16, -0.1, 0.1; h = 0, niter = 5, ndimtrunc = 16)
+getPhi4Data_cached(K, μ0, λ; h = h, niter = niter, ndimtrunc = ndimtrunc)
+
+plotCFT(K, μ0, λ; h = h, niter = niter, ndimtrunc = ndimtrunc)
