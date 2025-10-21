@@ -131,17 +131,17 @@ end
 
 function plotCFT(K, μ0, λ; h = 0, niter = 15, ndimtrunc = 16)
     lnz, cft_data, c, t = getPhi4Data_cached(K, μ0, λ; h = h, niter = niter, ndimtrunc = ndimtrunc)
-    
+
     # Plot the results
-    xs = collect(range(1,length(cft_data)))
+    xs = collect(range(1, length(cft_data)))
     plt = scatter(xs, real(cft_data)[2:end])   # Do not the first one (is zero)
 
     # Plot the exact results
     hline!(ising_cft_exact)
-   
+
     # Save the plot
     filepath = joinpath("Results/Plots", "CFT_data.png")
-    savefig(plt, filepath)
+    return savefig(plt, filepath)
 end
 
 # PARAMETERS
