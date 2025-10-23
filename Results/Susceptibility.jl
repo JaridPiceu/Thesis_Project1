@@ -10,9 +10,9 @@ include("../TensorMaker/TensorFactory.jl")
 #NOTE: in fig 2, we use absolute of different <ϕ>_h and <ϕ>_0 instead of difference because of plotting Logarithm
 
 # PARAMETERS
-K = 32
-niter = 20
-ndimtrunc = 32
+K = 16
+niter = 10
+ndimtrunc = 16
 
 
 function getΦ4ExpValue(K, μ0, λ, h; niter = niter, ndimtrunc = ndimtrunc)
@@ -20,7 +20,7 @@ function getΦ4ExpValue(K, μ0, λ, h; niter = niter, ndimtrunc = ndimtrunc)
     Timp1 = getImp1Tensor(K, μ0, λ, h)
     Timp2 = getImp2Tensor(K, μ0, λ, h)
 
-    scheme = Imp(Tpure, Timp1, Timp1, Timp2)
+    scheme = ImpurityHOTRG(Tpure, Timp1, Timp1, Timp2)
     _, _ = run!(scheme, truncdim(ndimtrunc), maxiter(niter))
 
     norm_pure = norm(@tensor scheme.T[1 2; 2 1])
