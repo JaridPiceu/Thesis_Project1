@@ -97,12 +97,27 @@ function plotPD_crosssection(; filepath = joinpath("Results/Data", "PhaseDiagram
     ans = [df.value[(df.μ0 .== μ0) .& (df.λ .== 1)][1] for μ0 in μ0s]
 
     if logscale
-        plt = scatter(μ0s, ans, yscale = :log10)
+        plt = scatter(
+            μ0s, ans;
+            yscale = :log10,
+            label = "Data",
+            title = "<ϕ²> for fixed λ=1",
+            xlabel = "μ0",
+            ylabel = "<ϕ²>",
+            marker = (:diamond, 5, :darkgreen)  # shape, size, color
+        )
         plotpath = joinpath("Results/Plots", "PD_crossectionLog.png")
         savefig(plt, plotpath)
         println("✅ Plot saved to $plotpath")
     else
-        plt = scatter(μ0s, ans)
+        plt = scatter(
+            μ0s, ans;
+            label = "Data",
+            title = "<ϕ²> for fixed λ=1",
+            xlabel = "μ0",
+            ylabel = "<ϕ²>",
+            marker = (:diamond, 5, :darkgreen)  # shape, size, color
+        )
         plotpath = joinpath("Results/Plots", "PD_crossection.png")
         savefig(plt, plotpath)
         println("✅ Plot saved to $plotpath")
