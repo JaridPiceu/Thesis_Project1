@@ -84,10 +84,10 @@ function plotPD_Data(; filepath = joinpath("Results/Data", "PhaseDiagram.csv"))
     return plt
 end
 
-function plotPD_crosssection(; filepath = joinpath("Results/Data", "PhaseDiagram.csv"), logscale=false)
+function plotPD_crosssection(; filepath = joinpath("Results/Data", "PhaseDiagram.csv"), logscale = false)
     df = CSV.read(filepath, DataFrame)
 
-            # Ensure Data directory exists
+    # Ensure Data directory exists
     if !isdir("Results/Plots")
         mkpath("Results/Plots")
     end
@@ -97,10 +97,10 @@ function plotPD_crosssection(; filepath = joinpath("Results/Data", "PhaseDiagram
     ans = [df.value[(df.μ0 .== μ0) .& (df.λ .== 1)][1] for μ0 in μ0s]
 
     if logscale
-        plt = scatter(μ0s, ans, yscale=:log10)
+        plt = scatter(μ0s, ans, yscale = :log10)
         plotpath = joinpath("Results/Plots", "PD_crossectionLog.png")
         savefig(plt, plotpath)
-        println("✅ Plot saved to $plotpath") 
+        println("✅ Plot saved to $plotpath")
     else
         plt = scatter(μ0s, ans)
         plotpath = joinpath("Results/Plots", "PD_crossection.png")
@@ -112,5 +112,5 @@ end
 
 getPD_Data()
 plotPD_Data()
-plotPD_crosssection(logscale=false)
-plotPD_crosssection(logscale=true)
+plotPD_crosssection(logscale = false)
+plotPD_crosssection(logscale = true)
